@@ -58,7 +58,7 @@ writeBalance.setValues(balanceArray)
 var coinArray = [];
 
 for (var j in symbolArray){
-  if (symbolArray[j] != "BTC"){    // There's no "BTC/BTC pairing, of course.
+  if (symbolArray[j] != "BTC"){    // There's no "BTC/BTC" pairing, of course.
     if (symbolArray[j] != "BTM"){ 
       if (symbolArray[j] !="SBTC"){
         if (symbolArray[j] !="BCX"){

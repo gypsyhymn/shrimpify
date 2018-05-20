@@ -36,9 +36,9 @@ function getAccountBalances() {
     
     for (var j in balances){
       if (balances[j].free > 0)
-        if (balances[j].asset != "BTM"){     // These are coins that aren't trading on Binance, but exist in wallets there.
-          if (balances[j].asset !="SBTC"){
-            if (balances[j].asset !="BCX"){
+        if (balances[j].asset != "BTM"){        // These are coins that aren't trading on Binance, but exist in wallets there.
+          if (balances[j].asset !="SBTC"){      // It's possible that there are more "problem" coins than these, but these are
+            if (balances[j].asset !="BCX"){     // the only ones that appeared in my wallet.
               if (balances[j].asset !="ETF"){
       balanceArray.push([balances[j].free])
       symbolArray.push([balances[j].asset])
@@ -58,7 +58,7 @@ writeBalance.setValues(balanceArray)
 var coinArray = [];
 
 for (var j in symbolArray){
-  if (symbolArray[j] != "BTC"){    // There's no "BTC/BTC pairing, of course.
+  if (symbolArray[j] != "BTC"){    // There's no "BTC/BTC" pairing, of course.
     if (symbolArray[j] != "BTM"){ 
       if (symbolArray[j] !="SBTC"){
         if (symbolArray[j] !="BCX"){
@@ -69,11 +69,13 @@ for (var j in symbolArray){
             var priceData = JSON.parse(priceJson);
             var coinPrice = parseFloat(priceData['price'])
             coinArray.push([coinPrice])}}}}}}
-  ss.getActiveSheet().getRange(2,3).setValue(1)
   
- // And write those into the sheet.
+ // And write those into the sheet. This is starting at 3,3 rather than 2,3 because I couldn't figure out how to add it to the
+ // loop above, in order to write the price at j,3 for each value of j. For some reason it always started at 2,3 in that case,
+ // even though for j=2, ticker is BTC, and the loop couldn't write a price for that value.
   
   var writePrice = ss.getActiveSheet().getRange(3,3,coinArray.length,coinArray[0].length)
   writePrice.setValues(coinArray)
   
+  ss.getActiveSheet().getRange(2,3).setValue(1)    // Add the BTC/BTC price as 1. 
   }

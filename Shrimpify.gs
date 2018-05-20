@@ -72,7 +72,9 @@ for (var j in symbolArray){
   
  // And write those into the sheet. This is starting at 3,3 rather than 2,3 because I couldn't figure out how to add it to the
  // loop above, in order to write the price at j,3 for each value of j. For some reason it always started at 2,3 in that case,
- // even though for j=2, ticker is BTC, and the loop couldn't write a price for that value.
+ // even though for j=2, ticker is BTC, and the loop couldn't write a price for that value. So my solution, for now, was to push
+ // the price data into an array, and then set those values starting at the correct cell. Unfortunately, this means that if Binance
+ // ever changes the order of their data and BTC is not the first coin on the list, this script will not work correctly.
   
   var writePrice = ss.getActiveSheet().getRange(3,3,coinArray.length,coinArray[0].length)
   writePrice.setValues(coinArray)
